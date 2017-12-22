@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { XMPPService } from '../../app/xmpp.service';
 
 @Component({
   selector: 'page-settings',
@@ -7,8 +7,11 @@ import { NavController } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public xmppService: XMPPService) {
 
   }
 
+  logout(){
+    this.xmppService.logout();
+  }
 }
