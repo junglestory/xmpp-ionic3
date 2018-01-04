@@ -31,6 +31,5 @@ export class LoginPage {
 
   login(){
     this.xmppService.login(this.jid, this.host, this.password);
-    //this.navCtrl.push(TabsPage);
   }
 }

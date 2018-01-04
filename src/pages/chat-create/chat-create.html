@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Room</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="closeModal()">Close</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<div padding>
+	  	<ion-toolbar>        
+	    	<ion-item>
+	    		<ion-input type="text" [(ngModel)]="name" placeholder="Write room name..." clearInput (keyup.enter)="createRoom()"></ion-input>
+	  		</ion-item>
+	  	</ion-toolbar>    
+	 	
+		<button ion-button block (click)="createRoom()">Create Room</button>
+	</div>
+</ion-content>

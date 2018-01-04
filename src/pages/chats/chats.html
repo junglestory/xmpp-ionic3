@@ -1,17 +1,22 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Chats
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title>Chats</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="openModal()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
+    <ion-item *ngFor="let chat of chats" href="#" (click)="chatDetail(chat.id)">
+      <ion-avatar item-start>
+        <img src="{{chat.avata}}">
+      </ion-avatar>
+      <h2>{{chat.name}}</h2>
+      <p>{{chat.lastText}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

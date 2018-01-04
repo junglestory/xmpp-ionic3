@@ -60,7 +60,7 @@ Strophe.addConnectionPlugin('muc', {
     if ((_ref = this._muc_handler) == null) {
       this._muc_handler = this._connection.addHandler(function(stanza) {
         var from, handler, handlers, id, roomname, x, xmlns, xquery, _i, _len;
-        console.log(stanza);
+
         from = stanza.getAttribute('from');
         if (!from) {
           return true;

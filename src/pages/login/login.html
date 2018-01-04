@@ -17,7 +17,7 @@
  <ion-list>
    <ion-item>
     <ion-label floating>Username</ion-label>
-   	<ion-input type="text" [(ngModel)]="jid"></ion-input>
+   	<ion-input type="text" [(ngModel)]="jid" (keyup.enter)="login()"></ion-input>
    </ion-item>
    <ion-item>
    	<ion-label floating>Password</ion-label>
