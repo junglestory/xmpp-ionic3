@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>chat</ion-title>
+    <ion-title>{{roomName}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only color="royal" (click)="openModal()">
         <ion-icon name="person-add"></ion-icon>
@@ -17,6 +17,9 @@
 	        <h3>{{message.senderId}}</h3>
 	      </div>
 	      <ion-avatar item-left *ngIf="message.senderId !== userId">
+	        <img src="assets/imgs/ben.png">
+	      </ion-avatar>
+	      <ion-avatar item-right *ngIf="message.senderId === userId">
 	        <img src="assets/imgs/ben.png">
 	      </ion-avatar>
 	      <div>

@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { NavController, ModalController, Modal } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { XMPPService } from '../../app/xmpp.service';
 import { ChatDetailPage } from '../chat-detail/chat-detail';
 import { ChatCreatePage } from '../chat-create/chat-create';
@@ -24,25 +24,28 @@ export class ChatsPage {
   openModal() {
     let createModal = this.modalCtrl.create(ChatCreatePage);
 
-    createModal.onDidDismiss(name => {
-     console.log(name);
-      this.createRoom(name)
+    createModal.onDidDismiss(name => {    
+      this.createRoom(name);
     });
 
     createModal.present();
   }
 
-  chatDetail(roomJid) {
+  chatDetail(roomJid, roomName) {
+    if (roomName !== "") {
+      this.xmppService.setRoomName(roomName);
+    }
+
   	this.navCtrl.push(ChatDetailPage, {
       id: roomJid
     });
   }
 
   createRoom(name) {
-  	this.xmppService.create(name);
+  	let roomJid = this.xmppService.create(name);
 
   	setTimeout(() => {
-  		this.chatDetail("");
+  		this.chatDetail(roomJid, "");
   	}, 1000);
   }
 }

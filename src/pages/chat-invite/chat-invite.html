@@ -1,20 +1,17 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Invite</ion-title>
     <ion-buttons end>
       <button ion-button (click)="closeModal()">Close</button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
 	<div padding>
 	  	<ion-toolbar>        
 	    	<ion-item>
-	    		<ion-input type="text" [(ngModel)]="jId" placeholder="Write jid.." clearInput (keyup.enter)="invite()"></ion-input>
+	    		<ion-input type="text" [(ngModel)]="jId" placeholder="Jabber ID..." clearInput (keyup.enter)="invite()"></ion-input>
 	  		</ion-item>
 	  	</ion-toolbar>    
 	 	

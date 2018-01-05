@@ -11,6 +11,7 @@ export class XMPPService {
 	private BOSH_SERVICE: string = "http://localhost:7070/http-bind/";
 	private CONFERENCE_SERVICE: string = "conference.localhost";
   	private connection: Strophe.Connection;
+    private roomName: string = "";
  
 	constructor(public events: Events) { 
 		this.dismissObserver = null;
@@ -19,19 +20,38 @@ export class XMPPService {
 	    });
     }
 
+    /*Function
+        Connects the client from the Jabber server.
+      Parameters:
+        (String) jid - Jabber id.
+        (String) host - Host name.
+        (String) pass - Password.
+      Returns:
+    */
 	login(jid, host, pass) {
 		this.connection = new Strophe.Connection(this.BOSH_SERVICE, { 'keepalive': true });
 		this.connection.connect(jid + '@' + host, pass, (status)=>{
               this.onConnect(status);
             });
 	}
-
+    
+    /*Function
+        Disconnects the client from the Jabber server.
+      Parameters:
+      Returns:
+    */ 
 	logout() {
 		this.connection.options.sync = true; // Switch to using synchronous requests since this is typically called onUnload.
         this.connection.flush();
         this.connection.disconnect();
 	}
 
+    /*Function
+        Queries a room for a list of occupants
+      Parameters:
+      Returns:
+        iq - Room info.
+    */
 	allRoster() {	
         this.connection.muc.init(this.connection);
         return new Promise(resolve => {
@@ -56,14 +76,18 @@ export class XMPPService {
         });
 	}
 
+    /*Function
+        Create multi-user chat room.
+      Parameters:
+        (String) roomName - The multi-user chat room name.
+      Returns:
+      id - the unique id used to create the chat room.
+    */
     create(roomName) {
         let nick = this.getNick();
         let roomId = this.timestamp();
-        let room = roomId + "@" + this.CONFERENCE_SERVICE + "/" + nick;
-
-        console.log("room : " + room);
-        console.log("nick : " + nick);
-        console.log("timestamp : " + this.timestamp());
+        let roomJid = roomId + "@" + this.CONFERENCE_SERVICE
+        let room = roomJid + "/" + nick;
 
         this.connection.muc.setStatus(roomId + "@" + this.CONFERENCE_SERVICE, nick, null, null);
         this.connection.muc.createInstantRoom(room, roomName, 
@@ -75,34 +99,73 @@ export class XMPPService {
             });
 
         this.connection.muc.setRoomName(roomId + "@" + this.CONFERENCE_SERVICE, nick);
+        this.setRoomName(roomName);
 
-        //ChatDetailsObj.setTo(roomId + "@" + sharedConn.CONFERENCE_SERVICE);
-        //ChatDetailsObj.setRoomName(roomName);
-        //ChatDetailsObj.setReceiver(roomName);
+        return roomJid;
     }
 
+    /*Function
+        Join a multi-user chat room
+      Parameters:
+        (String) roomJid - The multi-user chat room to join.
+      Returns:
+    */
     join(roomJid) {
         this.connection.muc.join(roomJid, this.getNick(), null, null, null, null, null, null);
     }
 
+    /*Function
+        Send the message in the chat room.
+      Parameters:
+        (String) roomJid - The multi-user chat room id.
+        (String) message - Send message.
+      Returns:
+    */
     sendMessage(roomJid, message) {
         this.connection.muc.groupchat(roomJid, message, null);
     }
 
+    /*Function
+        Send a mediated invitation.
+      Parameters:
+        (String) roomJid - The multi-user chat room name.
+        (String) id - The invitation's receiver.
+      Returns:
+    */
+    invite(roomJid, id) {
+        if (id !== "") {
+          this.connection.muc.invite(roomJid, id, "hi?");
+        }
+    }
+
+    // Create timestamp for multi-user chat room id.
     timestamp() {
         return Math.floor(new Date().getTime() / 1000);
     }
 
+    // Set room name.
+    setRoomName(roomName) {
+        this.roomName = roomName;
+    }
+
+    // Get room Name
+    getRoomName() {
+        return this.roomName;
+    }
+
+    // Parse nickname of jabber id.
     getNick() {
         let nick = this.connection.jid;
         nick = nick.substring(0, nick.indexOf('@'));
         return nick;
     }
 
-    getUserId() {
-        return this.connection.jid;
-    }
-
+    /*Function
+        Connect XMPP.
+      Parameters:    
+      Returns:
+        status - Status of connection.
+    */
 	onConnect(status) {
         var self = this;
 
@@ -111,9 +174,7 @@ export class XMPPService {
                 console.log('[Connection] Strophe is Connected');
                 
                 this.connection.addHandler((msg)=>{ self.onMessage(msg); return true;}, null, 'message', null, null, null);       
-
-                //this.connection.addHandler((stanza)=>{this.onSubscriptionRequest(stanza)}, null, "presence", "subscribe");
-                this.connection.addHandler((msg)=>{ self.onInvite(msg); return true;}, 'jabber:x:conference');
+                this.connection.addHandler((stanza)=>{self.onSubscriptionRequest(stanza)}, null, "presence", "subscribe");
 
                 this.dismissObserver.next("login");
 
@@ -154,6 +215,7 @@ export class XMPPService {
         }
     };
 
+    // Parse multi-chat room id.
     getParseRoomJid(id) {
         var pos = id.indexOf('/');
 
@@ -164,6 +226,7 @@ export class XMPPService {
         return id;
     }
 
+    // parse jabber id.
     getParseID(id) {
         var pos = id.indexOf('/');
 
@@ -174,6 +237,7 @@ export class XMPPService {
         return id;
     }
 
+    //When a new message is recieved
     onMessage(msg) {
         let message = [];
         let from = msg.getAttribute('from');
@@ -207,31 +271,4 @@ export class XMPPService {
     onSubscriptionRequest(stanza) {
         console.log(stanza);
     }
-
-    onInvite(msg) {
-        console.log("invite.............");   
-        console.log(msg);
-/*
-        let messages = [];
-        let from = msg.getAttribute('from');
-        let type = msg.getAttribute('type');
-        let elems = msg.getElementsByTagName('body');
-  
-        let d = new Date();
-        d = d.toLocaleTimeString().replace(/:\d+ /, ' ');
-
-        if (type == "groupchat" && elems.length > 0) {            
-            let body = elems[0];
-            let textMsg = Strophe.getText(body);
-            
-            messages.push({
-              userId: this.getParseID(from),
-              text: textMsg,
-              time: d
-            });
-        }
-
-        this.events.publish('messages', messages);
-        */
-    };
 }
