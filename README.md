@@ -10,7 +10,7 @@ This is a XMPP chat Client build using Strophe.js and Ionic3. This is an impleme
 
 ## Requirements
 * NPM
-* Openfire 4.2.1 or highe
+* Openfire 4.2.1 or higher
 
 ## Installation
 
@@ -22,8 +22,12 @@ $ cd xmpp-ionic3
 </code></pre>
 
 ## Development server
+<pre><code>
+$ ionic serve
+</code></pre>
 
-Run `ionic serve` for a dev server. Navigate to `http://localhost:8100/`. The app will automatically reload if you change any of the source files.
+Run `ionic serve` for a dev server. Navigate to `http://localhost:8100/`. 
+The app will automatically reload if you change any of the source files.
 
 ## References
 * https://github.com/arjunsk/Ionic-Chat-App
