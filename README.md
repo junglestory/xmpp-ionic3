@@ -31,3 +31,6 @@ The app will automatically reload if you change any of the source files.
 
 ## References
 * https://github.com/arjunsk/Ionic-Chat-App
+
+## License
+This software is released under the MIT license.
