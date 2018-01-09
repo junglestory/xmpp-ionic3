@@ -1,5 +1,5 @@
 # xmpp-ionic3
-This is a XMPP chat Client build using Strophe.js and Ionic3. This is an implementation to Multi-user chat.
+This is a XMPP chat Client build using [Strophe.js](http://strophe.im/strophejs/) and [Ionic3](https://ionicframework.com/getting-started/). This is an implementation to Multi-user chat.
 
 ## Features
 * Creating a room
@@ -9,8 +9,8 @@ This is a XMPP chat Client build using Strophe.js and Ionic3. This is an impleme
 * Invite to chat rooms
 
 ## Requirements
-* NPM
-* Openfire 4.2.1 or higher
+* [NPM](https://nodejs.org/en/download/)
+* [Openfire 4.2.1](https://www.igniterealtime.org/downloads/) or higher
 
 ## Installation
 
