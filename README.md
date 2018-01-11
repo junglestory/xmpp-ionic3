@@ -9,7 +9,7 @@ This is a XMPP chat Client build using [Strophe.js](http://strophe.im/strophejs/
 * Invite to chat rooms
 
 ## Requirements
-* [NPM](https://nodejs.org/en/download/)
+* [Node.js](https://nodejs.org/en/download/)
 * [Openfire 4.2.0](https://www.igniterealtime.org/downloads/) or higher
 
 ## Soruce code clone
