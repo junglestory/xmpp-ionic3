@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { XMPPService } from '../../app/xmpp.service';
 import { ChatDetailPage } from '../chat-detail/chat-detail';

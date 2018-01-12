@@ -28,7 +28,6 @@
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
     "strophe.js": "^1.2.14",
-    "strophejs-plugin-muc": "^1.1.0",
     "sw-toolbox": "3.6.0",
     "vanilla-js-dom": "^6.0.118",
     "zone.js": "0.8.18"

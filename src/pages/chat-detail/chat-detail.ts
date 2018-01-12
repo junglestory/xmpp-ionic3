@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { IonicPage, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild} from '@angular/core';
+import { NavParams, ModalController } from 'ionic-angular';
 import { XMPPService } from '../../app/xmpp.service';
 import { Events } from 'ionic-angular';
 import { Content } from 'ionic-angular';

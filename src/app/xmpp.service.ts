@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Events } from 'ionic-angular';
+import { Strophe } from 'strophe.js';
 declare var Strophe:any;
+
+export class Message {
+    id: String;
+    senderId: String;
+    text: String;
+    time: String;
+}
 
 @Injectable()
 export class XMPPService {
@@ -54,7 +62,7 @@ export class XMPPService {
     */
 	allRoster() {	
         this.connection.muc.init(this.connection);
-        return new Promise(resolve => {
+        return new Promise<any>(resolve => {
             this.connection.muc.queryOccupants(this.CONFERENCE_SERVICE, function (msg) {
                 let items = [];
                 let rosters = msg.querySelectorAll('item');
@@ -239,7 +247,7 @@ export class XMPPService {
 
     //When a new message is recieved
     onMessage(msg) {
-        let message = [];
+        let message: Message;
         let from = msg.getAttribute('from');
         let type = msg.getAttribute('type');
         let elems = msg.getElementsByTagName('body');
@@ -248,8 +256,9 @@ export class XMPPService {
         if (type == "groupchat" && elems.length > 0) {            
             let body = elems[0];
             let textMsg = Strophe.getText(body);
-            let date = new Date();
-            date = date.toLocaleTimeString().replace(/:\d+ /, ' ');
+            //let currentDate: Date;
+            let currentDate = new Date();
+            let date = currentDate.toLocaleTimeString().replace(/:\d+ /, ' ');
 
             // history
             if (delays.length > 0) {               
