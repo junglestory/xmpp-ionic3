@@ -21,6 +21,7 @@ $ cd xmpp-ionic3
 ## Installation
 <pre><code>
 $ npm update
+$ npm install -g cordova ionic
 </code></pre>
 
 ## Configuration
