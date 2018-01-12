@@ -25,7 +25,7 @@ $ npm install -g cordova ionic
 </code></pre>
 
 ## Configuration
-* /app/xmpp.service.ts
+* /src/app/xmpp.service.ts
 
 <pre><code>
 private BOSH_SERVICE: string = "http://localhost:7070/http-bind/";  // Your bosh service
