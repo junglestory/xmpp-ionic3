@@ -14,28 +14,28 @@ This is a XMPP chat Client build using [Strophe.js](http://strophe.im/strophejs/
 
 ## Soruce code clone
 git clone https://github.com/junglestory/xmpp-ionic3.git
-<pre><code>
+```shell
 $ cd xmpp-ionic3
-</code></pre>
+```
 
 ## Installation
-<pre><code>
+```shell
 $ npm update
 $ npm install -g cordova ionic
-</code></pre>
+```
 
 ## Configuration
 * /src/app/xmpp.service.ts
 
-<pre><code>
+```shell
 private BOSH_SERVICE: string = "http://localhost:7070/http-bind/";  // Your bosh service
 private CONFERENCE_SERVICE: string = "conference.localhost";        // Your conference service
-</code></pre>
+```
 
 ## Development server
-<pre><code>
+```shell
 $ ionic serve
-</code></pre>
+```
 
 Run `ionic serve` for a dev server. Navigate to `http://localhost:8100/`. 
 The app will automatically reload if you change any of the source files.
